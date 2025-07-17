@@ -13,14 +13,16 @@ google_creds = json.loads(os.environ['GOOGLE_CREDS'])
 creds = ServiceAccountCredentials.from_json_keyfile_dict(google_creds, scope)
 client = gspread.authorize(creds)
 
-# Открываем таблицу по URL или ID
-SHEET_URL = 'https://docs.google.com/spreadsheets/d/1CucLDyFCUhOwov-oZ-4udVHmJJF4XheLb-OEaumMKnQ/edit#gid=1737292423'
+# Открываем таблицу по ID
 worksheet = client.open_by_key('1CucLDyFCUhOwov-oZ-4udVHmJJF4XheLb-OEaumMKnQ').sheet1
-
 
 @app.route('/faq', methods=['POST'])
 def faq():
     data = request.get_json(force=True)
+    
+    if not data or 'question' not in data:
+        return jsonify({'error': 'Неверный формат запроса. Нужно поле question.'}), 400
+
     user_question = data.get('question', '')
 
     rows = worksheet.get_all_records()
