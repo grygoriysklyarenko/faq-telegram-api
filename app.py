@@ -20,7 +20,7 @@ worksheet = client.open_by_key('1CucLDyFCUhOwov-oZ-4udVHmJJF4XheLb-OEaumMKnQ').s
 
 @app.route('/faq', methods=['POST'])
 def faq():
-    data = request.get_json()
+    data = request.get_json(force=True)
     user_question = data.get('question', '')
 
     rows = worksheet.get_all_records()
