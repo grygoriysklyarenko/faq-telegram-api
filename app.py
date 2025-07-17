@@ -2,12 +2,15 @@ from flask import Flask, request, jsonify
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from fuzzywuzzy import fuzz
+import json
+import os
 
 app = Flask(__name__)
 
 # Настройка доступа к Google Sheets
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
-creds = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+google_creds = json.loads(os.environ['GOOGLE_CREDS'])
+creds = ServiceAccountCredentials.from_json_keyfile_dict(google_creds, scope)
 client = gspread.authorize(creds)
 
 # Открываем таблицу по URL или ID
