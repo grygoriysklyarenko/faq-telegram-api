@@ -15,7 +15,8 @@ client = gspread.authorize(creds)
 
 # Открываем таблицу по URL или ID
 SHEET_URL = 'https://docs.google.com/spreadsheets/d/1CucLDyFCUhOwov-oZ-4udVHmJJF4XheLb-OEaumMKnQ/edit#gid=1737292423'
-worksheet = client.open_by_url(SHEET_URL).sheet1
+worksheet = client.open_by_key('1CucLDyFCUhOwov-oZ-4udVHmJJF4XheLb-OEaumMKnQ').sheet1
+
 
 @app.route('/faq', methods=['POST'])
 def faq():
