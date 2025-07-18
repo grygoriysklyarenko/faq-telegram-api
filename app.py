@@ -17,14 +17,7 @@ worksheet = client.open_by_key('1CucLDyFCUhOwov-oZ-4udVHmJJF4XheLb-OEaumMKnQ').s
 
 @app.route('/faq', methods=['POST'])
 def faq():
-    print('DEBUG: Headers:', request.headers)
-    print('DEBUG: Raw data:', request.data)
-
-    if not request.is_json:
-        return jsonify({'error': 'Content-Type должен быть application/json'}), 400
-
-    data = request.get_json()
-    print('DEBUG: Parsed JSON:', data)
+    data = request.get_json(force=True)
 
     if not data or 'question' not in data:
         return jsonify({'error': 'Неверный формат запроса. Нужно поле question.'}), 400
